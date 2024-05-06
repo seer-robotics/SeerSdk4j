@@ -1,4 +1,4 @@
-package com.seer.rbk;
+package com.seer.sdk.rbk;
 
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;

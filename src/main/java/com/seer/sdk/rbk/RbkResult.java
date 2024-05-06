@@ -1,4 +1,4 @@
-package com.seer.rbk;
+package com.seer.sdk.rbk;
 
 import lombok.Builder;
 import lombok.Data;

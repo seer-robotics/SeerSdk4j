@@ -1,4 +1,4 @@
-package com.seer.rbk;
+package com.seer.sdk.rbk;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufUtil;

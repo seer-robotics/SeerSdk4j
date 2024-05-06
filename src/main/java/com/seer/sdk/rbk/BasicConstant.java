@@ -1,4 +1,4 @@
-package com.seer.rbk;
+package com.seer.sdk.rbk;
 
 public class BasicConstant {
     public static final byte START_MARK = 0x5A;     // 同步头

@@ -1,9 +1,8 @@
-package com.seer.rbk;
+package com.seer.sdk.rbk;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.CompositeByteBuf;
 import io.netty.buffer.Unpooled;
-import lombok.val;
 
 import java.nio.charset.StandardCharsets;
 

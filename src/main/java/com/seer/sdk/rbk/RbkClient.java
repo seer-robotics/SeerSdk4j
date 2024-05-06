@@ -1,4 +1,4 @@
-package com.seer.rbk;
+package com.seer.sdk.rbk;
 
 
 import lombok.extern.slf4j.Slf4j;

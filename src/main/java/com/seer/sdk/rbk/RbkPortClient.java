@@ -1,4 +1,4 @@
-package com.seer.rbk;
+package com.seer.sdk.rbk;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.buffer.CompositeByteBuf;
 import io.netty.channel.*;
