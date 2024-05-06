@@ -6,11 +6,12 @@ import io.netty.channel.ChannelFuture;
 import io.netty.channel.EventLoopGroup;
 import lombok.Builder;
 import lombok.Data;
+
 import java.util.concurrent.TimeUnit;
 
 @Data
 @Builder
- class NettyClient {
+class NettyClient {
     private EventLoopGroup eventLoopGroup;
     private ChannelFuture channelFuture;
 
@@ -18,6 +19,7 @@ import java.util.concurrent.TimeUnit;
         ByteBufUtil.prettyHexDump(bf);
         channelFuture.channel().writeAndFlush(bf).await(5000, TimeUnit.MILLISECONDS);
     }
+
     public void close() {
         try {
             channelFuture.channel().close();

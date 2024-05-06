@@ -1,4 +1,5 @@
 package com.seer.sdk.rbk;
+
 import io.netty.bootstrap.Bootstrap;
 import io.netty.buffer.CompositeByteBuf;
 import io.netty.channel.*;
@@ -6,6 +7,7 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import lombok.extern.slf4j.Slf4j;
+
 import java.net.InetSocketAddress;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -24,7 +26,7 @@ class RbkPortClient {
     private final Map<Integer, String> responseMap = new ConcurrentHashMap<>();
     private volatile NettyClient nettyClient = null;
 
-    RbkPortClient(String host, Integer port){
+    RbkPortClient(String host, Integer port) {
         this.port = port;
         this.host = host;
     }
@@ -38,10 +40,10 @@ class RbkPortClient {
         return rbkResult;
     }
 
-    private RbkResult doRequest(int apiNo, String reqStr, Long timeout){
+    private RbkResult doRequest(int apiNo, String reqStr, Long timeout) {
         timeout = timeout == null ? 10 * 1000 : timeout;
         lock.lock();
-        try{
+        try {
             NettyClient c;
             RbkResult.RbkResultBuilder rbkResultBuilder = RbkResult.builder()
                     .ip(host).apiNo(apiNo)
@@ -64,7 +66,7 @@ class RbkPortClient {
 
             while (!resetting) {
                 try {
-                    if(!condition.await(timeout, TimeUnit.MILLISECONDS)){
+                    if (!condition.await(timeout, TimeUnit.MILLISECONDS)) {
                         //等待超时
                         return rbkResultBuilder.kind(RbkResultKind.Timeout).errMsg("Timeout").build();
                     }
@@ -73,14 +75,14 @@ class RbkPortClient {
                     log.error("Waiting for results to be interrupted ip {} port {} {}", host, port, e.getMessage());
                     return rbkResultBuilder.kind(RbkResultKind.Interrupted).errMsg("Timeout").build();
                 }
-                if(responseMap.containsKey(flowNo)){
+                if (responseMap.containsKey(flowNo)) {
                     String resStr = responseMap.remove(flowNo);
                     return rbkResultBuilder.kind(RbkResultKind.Ok).resStr(resStr).build();
                 }
             }
             //已重置
             return rbkResultBuilder.kind(RbkResultKind.Disposed).build();
-        }finally {
+        } finally {
             lock.unlock();
         }
 
@@ -123,23 +125,23 @@ class RbkPortClient {
         }
     }
 
-     void onMessage(ChannelHandlerContext ctx, RbkFrame msg)  {
+    void onMessage(ChannelHandlerContext ctx, RbkFrame msg) {
         responseMap.put(msg.getFlowNo(), msg.getBodyStr());
-         lock.lock();
-         try {
-             condition.signalAll();
-         }finally {
-             lock.unlock();
-         }
+        lock.lock();
+        try {
+            condition.signalAll();
+        } finally {
+            lock.unlock();
+        }
 
-     }
+    }
 
-     void onError(Throwable e) {
+    void onError(Throwable e) {
         log.error("netty error ", e.getMessage());
         reset();
     }
 
-    private Integer nextFlowNo(){
+    private Integer nextFlowNo() {
         Integer no = (flowNoCounter + 1) % 512;
         flowNoCounter = no;
         return no;

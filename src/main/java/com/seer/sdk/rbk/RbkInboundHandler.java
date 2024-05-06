@@ -6,15 +6,17 @@ import io.netty.util.ReferenceCountUtil;
 
 class RbkInboundHandler extends SimpleChannelInboundHandler<RbkFrame> {
     private RbkPortClient client;
-    public  RbkInboundHandler(RbkPortClient client){
+
+    public RbkInboundHandler(RbkPortClient client) {
         this.client = client;
 
     }
+
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, RbkFrame msg) throws Exception {
         try {
             client.onMessage(ctx, msg);
-        }finally {
+        } finally {
             ReferenceCountUtil.release(msg);
         }
     }

@@ -1,6 +1,6 @@
 package com.seer.sdk.rbk;
 
- enum RbkResultKind {
+public enum RbkResultKind {
     Ok,
     NoSuchRobot,
     ConnectFail,

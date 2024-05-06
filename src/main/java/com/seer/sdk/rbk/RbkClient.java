@@ -11,14 +11,16 @@ public class RbkClient {
     RbkPortClient stateClient;
     RbkPortClient controlClient;
     RbkPortClient navClient;
-    public RbkClient(String host){
+
+    public RbkClient(String host) {
         this.host = host;
         this.configClient = new RbkPortClient(host, 19207);
         this.miscClient = new RbkPortClient(host, 19210);
         this.stateClient = new RbkPortClient(host, 19204);
         this.controlClient = new RbkPortClient(host, 19205);
-        this.navClient  = new RbkPortClient(host, 19206);
+        this.navClient = new RbkPortClient(host, 19206);
     }
+
     //释放资源
     /*
      * Releasing the connection to the robot
@@ -30,6 +32,7 @@ public class RbkClient {
         configClient.dispose();
         miscClient.dispose();
     }
+
     /*
      * @param apiNo  rbk number
      * @param requestStr  rbk request json
@@ -62,8 +65,6 @@ public class RbkClient {
             return RbkResult.builder().kind(RbkResultKind.BadApiNo).ip(host).apiNo(apiNo).resStr(requestStr).build();
         }
     }
-
-
 
 
 }
