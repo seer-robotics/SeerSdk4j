@@ -34,9 +34,9 @@ public class RbkClient {
     }
 
     /*
-     * @param apiNo  rbk number
+     * @param apiNo  rbk api no
      * @param requestStr  rbk request json
-     * @param timeout  rbk
+     * @param timeout default 10s
      * @return RbkResult {"kind": Ok|NoSuchRobot|ConnectFail|WriteError|Disposed|BadApiNo|Timeout|Interrupted  Only ok means the request for rbk was successful
      *                     "ip": robot ip    (string)
      *                     "apiNo": rbk request num (int)
